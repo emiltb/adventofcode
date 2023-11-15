@@ -8,11 +8,12 @@ AOC_COOKIE = {"session": os.getenv("AOCCOOKIE")}
 parser = argparse.ArgumentParser()
 parser.add_argument("--year", type=int, default=2022)
 parser.add_argument("--day", type=int, default=1)
+parser.add_argument("--force", action=argparse.BooleanOptionalAction)
 args = parser.parse_args()
 
 
 input_path = f"{args.year}/data/{args.day}.in"
-if os.path.exists(input_path):
+if os.path.exists(input_path) and not args.force:
     print(f"Input for {args.year} day {args.day} already downloaded")
     exit(1)
 
