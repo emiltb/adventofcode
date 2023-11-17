@@ -19,7 +19,7 @@ def merge_ranges(intervals):
 
 data = [
     [int(n) for n in re.findall("-?[\d]+", s)]
-    for s in open("inputs/input15.txt").read().strip().splitlines()
+    for s in open("data/15.in").read().strip().splitlines()
 ]
 
 sensors = [(a, b) for (a, b, *_) in data]

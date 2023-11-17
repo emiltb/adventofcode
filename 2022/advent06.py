@@ -6,6 +6,7 @@ def slider(obj, w):
         window = window[1:] + s
         yield window
 
+
 def find_code(data, width):
     objslider = slider(data, width)
 
@@ -14,7 +15,8 @@ def find_code(data, width):
             break
     return i + width, code
 
-with open("inputs/input06.txt", "r") as f:
+
+with open("data/6.in", "r") as f:
     data = f.read()
 
 # Part 1

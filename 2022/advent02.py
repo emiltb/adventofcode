@@ -1,8 +1,9 @@
 import numpy as np
 
-data = np.loadtxt("inputs/input02.txt", dtype="str")
+data = np.loadtxt("data/2.in", dtype="str")
 
 # A, X = ROCK = 1; B, Y = PAPER = 2; C, Z = SCISSORS = 3
+
 
 # Part 1
 def sign_score(b):

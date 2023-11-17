@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 lines = []
-with open("inputs/input14.txt") as f:
+with open("data/14.in") as f:
     for line in f:
         lines.append(line.strip().split("->"))
 

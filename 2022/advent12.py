@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 from copy import deepcopy
 import numpy as np
 
-with open("inputs/input12.txt", "r") as f:
+with open("data/12.in", "r") as f:
     raw_data = f.read()
 
 grid = [s.strip().splitlines() for s in raw_data]
-grid = [list(x) for x in open("inputs/input12.txt").read().strip().splitlines()]
+grid = [list(x) for x in open("data/12.in").read().strip().splitlines()]
 for r, row in enumerate(grid):
     for c, item in enumerate(row):
         if item == "S":

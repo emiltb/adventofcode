@@ -3,11 +3,12 @@ from itertools import groupby
 import re
 from math import floor
 
-with open("inputs/input11.txt", "r") as f:
+with open("data/11.in", "r") as f:
     input = f.readlines()
 
 data = [s.strip() for s in input]
 monkeys_raw = [list(group) for k, group in groupby(data, lambda x: x == "") if not k]
+
 
 # Define a Monkey class to handle keeping track of items, interactions, catches and throws
 class Monkey:

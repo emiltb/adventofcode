@@ -1,6 +1,6 @@
 from math import sqrt
 
-with open("inputs/input09.txt", "r") as f:
+with open("data/9.in", "r") as f:
     data = f.readlines()
 
 H_moves = [(m[0], int(m[1])) for m in [s.strip().split() for s in data]]
