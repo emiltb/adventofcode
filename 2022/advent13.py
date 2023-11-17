@@ -1,4 +1,4 @@
-data = [s.splitlines() for s in open("inputs/input13.txt").read().strip().split("\n\n")]
+data = [s.splitlines() for s in open("data/13.in").read().strip().split("\n\n")]
 
 
 def compare(a, b):

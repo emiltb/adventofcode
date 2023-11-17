@@ -2,7 +2,7 @@ from collections import deque
 
 voxels = {
     tuple([int(n) for n in v.strip().split(",")])
-    for v in open("inputs/input18.txt").readlines()
+    for v in open("data/18.in").readlines()
 }
 
 dirs = [(1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)]
@@ -19,6 +19,7 @@ for x, y, z in voxels:
 print("Surface area of obsidian:", s)
 
 # Part 2
+
 
 # Set outer bounds that we are sure are outside the obsidian
 def minmax(l):

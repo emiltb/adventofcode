@@ -1,7 +1,8 @@
-with open("inputs/input07.txt", "r") as f:
+with open("data/7.in", "r") as f:
     data = f.readlines()
 
 terminal = [s.strip() for s in data]
+
 
 # Part 1
 def parse_command(l):
@@ -31,13 +32,13 @@ for l in terminal:
     else:
         parse_content(l)
 
-possible_paths = ['/']
-for p in [c[0].split('/') for c in contents]:
+possible_paths = ["/"]
+for p in [c[0].split("/") for c in contents]:
     paths = []
-    path = ''
+    path = ""
     for d in p:
-        if d != '':
-            path = path + '/' + d
+        if d != "":
+            path = path + "/" + d
             paths.append(path)
     possible_paths.append(paths)
 
@@ -49,17 +50,23 @@ for c in folders:
 
 sum_of_folders_to_delete = sum([f[1] for f in folder_sizes if f[1] <= 100000])
 
-print('Sum of all of the directories with a total size of at most 100000:', sum_of_folders_to_delete)
+print(
+    "Sum of all of the directories with a total size of at most 100000:",
+    sum_of_folders_to_delete,
+)
 
 
 # Part 2
 
 total_size = 70000000
 space_needed = 30000000
-space_used = [f[1] for f in folder_sizes if f[0] == '/'][0]
+space_used = [f[1] for f in folder_sizes if f[0] == "/"][0]
 need_to_delete = space_needed - (total_size - space_used)
 
 delete_candidates = [f for f in folder_sizes if f[1] > need_to_delete]
-delete_candidates.sort(key = lambda x : x[1])
+delete_candidates.sort(key=lambda x: x[1])
 
-print('Smallest directory that, if deleted, would free up enough space on the filesystem to run the update:', delete_candidates[0])
+print(
+    "Smallest directory that, if deleted, would free up enough space on the filesystem to run the update:",
+    delete_candidates[0],
+)

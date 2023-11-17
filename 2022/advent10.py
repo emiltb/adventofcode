@@ -1,6 +1,6 @@
 import numpy as np
 
-with open("inputs/input10.txt", "r") as f:
+with open("data/10.in", "r") as f:
     data = f.readlines()
 
 instructions = [s.strip().split() for s in data]

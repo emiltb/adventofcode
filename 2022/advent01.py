@@ -1,12 +1,13 @@
 import numpy as np
-with open('inputs/input01.txt', 'r') as f:
+
+with open("data/1.in", "r") as f:
     input01 = f.readlines()
 
 # Part 1
 
 # Parse all values into a list, making sure that we can recognize each elfs groups
 input01 = [n.strip() for n in input01]
-input01 = np.array([int(n) if n != '' else 0 for n in input01])
+input01 = np.array([int(n) if n != "" else 0 for n in input01])
 
 # Split the values into groups depending on where the array is 0 (which corresponds to blank lines in the input data)
 list_divisions = np.where(input01 == 0)[0]

@@ -1,7 +1,7 @@
 import numpy as np
 from functools import reduce
 
-with open("inputs/input08.txt", "r") as f:
+with open("data/8.in", "r") as f:
     raw_data = f.readlines()
 
 # Read the data into a numpy array

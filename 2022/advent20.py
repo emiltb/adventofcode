@@ -1,6 +1,4 @@
-data = [
-    {"n": int(f), "sorted": False} for f in open("inputs/input20.txt").read().split()
-]
+data = [{"n": int(f), "sorted": False} for f in open("data/20.in").read().split()]
 
 while any([~el["sorted"] for el in data]):
     for i, el in enumerate(data):

@@ -1,4 +1,4 @@
-data = [f for f in open("inputs/input25.txt").read().splitlines()]
+data = [f for f in open("data/25.in").read().splitlines()]
 
 
 def snafu_to_num(num):

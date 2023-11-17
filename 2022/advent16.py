@@ -3,7 +3,7 @@ from collections import deque
 
 tunnels = {}
 valves = {}
-with open("inputs/input16.txt", "r") as f:
+with open("data/16.in", "r") as f:
     for l in f:
         line = [p.split() for p in l.split(";")]
         tunnels[line[0][1]] = [n.strip(",") for n in line[1][4:]]
