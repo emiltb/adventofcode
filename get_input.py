@@ -13,6 +13,7 @@ args = parser.parse_args()
 
 
 input_path = f"{args.year}/data/{args.day}.in"
+script_path = f"{args.year}/{args.day}.py"
 if os.path.exists(input_path) and not args.force:
     print(f"Input for {args.year} day {args.day} already downloaded")
     exit(1)
@@ -22,3 +23,7 @@ data = requests.get(
 )
 with open(input_path, "w") as f:
     f.writelines(data.text)
+
+if not os.path.exists(script_path):
+    with open(script_path, "w") as f:
+        f.writelines(f"data = [l.strip() for l in open('data/{args.day}.in')]\n\n")
