@@ -26,8 +26,6 @@ data = requests.get(
     headers=headers,
 )
 
-print(data.request.headers)
-
 with open(input_path, "w") as f:
     f.writelines(data.text)
 
