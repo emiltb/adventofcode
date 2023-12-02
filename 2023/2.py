@@ -6,13 +6,13 @@ games = [l.split(":")[1].split(";") for l in data]
 
 # Part 1
 def get_n_colors(s):
-    green = re.search("(\d+) green", s)
-    green = int(green.group(1)) if green else 0
-    blue = re.search("(\d+) blue", s)
-    blue = int(blue.group(1)) if blue else 0
-    red = re.search("(\d+) red", s)
-    red = int(red.group(1)) if red else 0
-    return (green, blue, red)
+    n_colors = tuple()
+    for c in ["green", "blue", "red"]:
+        n = re.search(f"(\d+) {c}", s)
+        n = int(n.group(1)) if n else 0
+        n_colors += (n,)
+
+    return n_colors
 
 
 total = 0
