@@ -20,9 +20,9 @@ for i, g in enumerate(games):
     max_red = max_green = max_blue = 0
     for draw in g:
         green, blue, red = get_n_colors(draw)
-        max_green = green if green > max_green else max_green
-        max_blue = blue if blue > max_blue else max_blue
-        max_red = red if red > max_red else max_red
+        max_green = max(green, max_green)
+        max_blue = max(blue, max_blue)
+        max_red = max(red, max_red)
 
     if max_red <= 12 and max_green <= 13 and max_blue <= 14:
         total += i + 1
@@ -35,9 +35,9 @@ for i, g in enumerate(games):
     max_red = max_green = max_blue = 0
     for draw in g:
         green, blue, red = get_n_colors(draw)
-        max_green = green if green > max_green else max_green
-        max_blue = blue if blue > max_blue else max_blue
-        max_red = red if red > max_red else max_red
+        max_green = max(green, max_green)
+        max_blue = max(blue, max_blue)
+        max_red = max(red, max_red)
 
     total += max_green * max_blue * max_red
 
