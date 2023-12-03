@@ -32,4 +32,4 @@ for p, coords in partnumbers:
                 gears[next_p].add(p)
 
 print(sum((n for n, _ in found_parts)))
-sum(math.prod(p) for p in gears.values() if len(p) == 2)
+print(sum(math.prod(p) for p in gears.values() if len(p) == 2))
