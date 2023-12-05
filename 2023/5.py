@@ -42,11 +42,10 @@ l = 0
 search = True
 while search:
     init_l = l
-    next_l = l + 1
     for k in list(maps.keys())[::-1]:
         l = convert_rev(k, l)
     for s, r in seed_pairs:
         if s <= l <= (s + r):
             print(init_l)
             search = False
-    l = next_l
+    l = init_l + 1
