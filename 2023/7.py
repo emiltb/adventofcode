@@ -2,7 +2,7 @@ from collections import Counter
 from functools import cmp_to_key
 from itertools import count
 
-data = {k: int(b) for k, b in [l.split() for l in open('2023/data/7.in')]}
+data = {k: int(b) for k, b in [l.split() for l in open('data/7.in')]}
 symbols = "AKQJT98765432"[::-1]
 c = count(1)
 
