@@ -33,7 +33,9 @@ def next_move(char, indir):
 
 P1 = 1
 
+# This needs to be a valid move for the grid - works for me, but not a general solution
 first_move = (0, 1)
+
 next_pos = (S[0], S[1] + 1)
 nm = next_move(data[next_pos[0]][next_pos[1]], indir=(0, 1))
 while next_pos != S:
