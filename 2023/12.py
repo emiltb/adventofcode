@@ -4,9 +4,6 @@ data = [
     [a, literal_eval(b)] for a, b in [l.strip().split(" ") for l in open("data/12.in")]
 ]
 
-cache = {}
-
-
 def f(string, damaged, cache):
     key = (string, damaged)
     if key in cache:
@@ -49,16 +46,14 @@ def f(string, damaged, cache):
 # Part 1
 P1 = 0
 for s, d in data:
-    cache.clear()
-    P1 += f(s, d, cache)
+    P1 += f(s, d, {})
 print(P1)
 
 
 # Part 2
 P2 = 0
 for s, d in data:
-    cache.clear()
     s = "?".join([s] * 5)
     d = tuple([x for y in [d] * 5 for x in y])
-    P2 += f(s, d, cache)
+    P2 += f(s, d, {})
 print(P2)
