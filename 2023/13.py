@@ -1,6 +1,6 @@
 from itertools import combinations
 
-data = [l.split() for l in open("data/13.test.in").read().split("\n\n")]
+data = [l.split() for l in open("data/13.in").read().split("\n\n")]
 
 
 # Part 1
@@ -47,3 +47,23 @@ for l in data:
     l_t = ["".join(i) for i in zip(*l)]
     P2 += 100 * g(l) + g(l_t)
 print(P2)
+
+t = """.#..#.#..
+.......##
+######.#.
+#.##.###.
+#....#.##
+#....###.
+######.#.
+.####....
+.####.#..
+######.#.
+#....###."""
+t.split()
+f(t.split())
+g(t.split())
+
+t_t = ["".join(i) for i in zip(*t.split())]
+t_t
+f(t_t)
+g(t_t)
