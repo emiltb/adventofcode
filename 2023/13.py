@@ -20,27 +20,15 @@ print(P1)
 
 # Part 2
 def g(l):
-    replace_list = set()
-    all_n = []
-    for i, l1 in enumerate(l):
-        for l2 in l:
-            combs = [i for i in range(len(l1)) if l1[i] != l2[i]]
-            if len(combs) == 1:
-                replace_list.add((i, l2))
-    for item, li in replace_list:
-        new_data = l.copy()
-        new_data[item] = li
-        for n in range(1, len(new_data)):
-            if all(l1 == l2 for l1, l2 in zip(new_data[:n][::-1], new_data[n:])):
-                all_n.append(n)
-    p1res = f(l)
-    res = [0]
-    if len(all_n) == 1:
-        res = all_n
-    else:
-        res = [n for n in all_n if n != p1res]
-    return res[0] if res else 0
+    for n in range(1, len(l)):
+        l1 = l[:n][::-1]
+        l2 = l[n:]
 
+        rowpairs = ((x,y) for x,y in zip(l1,l2))
+        rowdiffs = sum(n1!=n2 for r1,r2 in rowpairs for n1,n2 in zip(r1,r2))
+        if rowdiffs == 1:
+            return n
+    return 0
 
 P2 = 0
 for l in data:
@@ -48,22 +36,4 @@ for l in data:
     P2 += 100 * g(l) + g(l_t)
 print(P2)
 
-t = """.#..#.#..
-.......##
-######.#.
-#.##.###.
-#....#.##
-#....###.
-######.#.
-.####....
-.####.#..
-######.#.
-#....###."""
-t.split()
-f(t.split())
-g(t.split())
 
-t_t = ["".join(i) for i in zip(*t.split())]
-t_t
-f(t_t)
-g(t_t)
