@@ -16,17 +16,10 @@ print(P1)
 # Part 2
 boxes = defaultdict(dict)
 for e in data:
-    if "=" in e:
-        box, op = e.split("=")
-        lens = {box: int(op)}
-        if box in boxes[f(box)]:
-            boxes[f(box)][box] = int(op)
-        else: 
-            boxes[f(box)].update(lens)
-    if "-" in e:
-        box, _ = e.split('-')
-        if box in boxes[f(box)]:
-            boxes[f(box)].pop(box)
+    match e.strip("-").split("="):
+        case [box, op]: boxes[f(box)][box] = int(op)
+        case [box]: 
+            if box in boxes[f(box)]: boxes[f(box)].pop(box)
 
 P2 = 0
 for box, lenses in boxes.items():
