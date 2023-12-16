@@ -3,10 +3,7 @@ from itertools import combinations
 
 data = [l.strip() for l in open("data/16.in")]
 
-grid = dict()
-for r, l in enumerate(data):
-    for c, d in enumerate(l):
-        grid[(r, c)] = d
+grid = {(r, c): d for r, l in enumerate(data) for c, d in enumerate(l)}
 
 
 # Part 1
@@ -16,50 +13,23 @@ def f(S):
 
     while q:
         (r, c), (dr, dc) = q.popleft()
+        next_pos = [(r + dr, c + dc)]
+        next_dir = [(dr, dc)]
         match grid[(r, c)]:
-            case ".":
-                next_pos = [(r + dr, c + dc)]
-                next_dir = [(dr, dc)]
             case "|":
                 if (dr, dc) == (0, 1) or (dr, dc) == (0, -1):
                     next_pos = [(r - 1, c), (r + 1, c)]
                     next_dir = [(-1, 0), (1, 0)]
-                if (dr, dc) == (1, 0) or (dr, dc) == (-1, 0):
-                    next_pos = [(r + dr, c + dc)]
-                    next_dir = [(dr, dc)]
             case "-":
                 if (dr, dc) == (1, 0) or (dr, dc) == (-1, 0):
                     next_pos = [(r, c - 1), (r, c + 1)]
                     next_dir = [(0, -1), (0, 1)]
-                if (dr, dc) == (0, 1) or (dr, dc) == (0, -1):
-                    next_pos = [(r + dr, c + dc)]
-                    next_dir = [(dr, dc)]
             case "/":
-                if (dr, dc) == (1, 0):
-                    next_pos = [(r, c - 1)]
-                    next_dir = [(0, -1)]
-                if (dr, dc) == (-1, 0):
-                    next_pos = [(r, c + 1)]
-                    next_dir = [(0, 1)]
-                if (dr, dc) == (0, 1):
-                    next_pos = [(r - 1, c)]
-                    next_dir = [(-1, 0)]
-                if (dr, dc) == (0, -1):
-                    next_pos = [(r + 1, c)]
-                    next_dir = [(1, 0)]
+                next_pos = [(r - dc, c - dr)]
+                next_dir = [(-dc, -dr)]
             case "\\":
-                if (dr, dc) == (1, 0):
-                    next_pos = [(r, c + 1)]
-                    next_dir = [(0, 1)]
-                if (dr, dc) == (-1, 0):
-                    next_pos = [(r, c - 1)]
-                    next_dir = [(0, -1)]
-                if (dr, dc) == (0, 1):
-                    next_pos = [(r + 1, c)]
-                    next_dir = [(1, 0)]
-                if (dr, dc) == (0, -1):
-                    next_pos = [(r - 1, c)]
-                    next_dir = [(-1, 0)]
+                next_pos = [(r + dc, c + dr)]
+                next_dir = [(dc, dr)]
 
         for p, d in zip(next_pos, next_dir):
             if p in grid and (p, d) not in visited:
