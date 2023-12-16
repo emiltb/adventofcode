@@ -1,5 +1,4 @@
 from collections import deque
-from itertools import combinations
 
 data = [l.strip() for l in open("data/16.in")]
 
