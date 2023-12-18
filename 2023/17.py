@@ -1,7 +1,7 @@
 from collections import namedtuple
 from heapq import heappop, heappush
 
-data = [l.strip() for l in open("data/17.test.in")]
+data = [l.strip() for l in open("data/17.in")]
 
 block = namedtuple("block", ["heatloss", "r", "c", "dr", "dc", "n"])
 
@@ -50,7 +50,6 @@ while q:
 
     if (node.r, node.c, node.dr, node.dc, node.n) in visited:
         continue
-    print(node)
 
     visited.add((node.r, node.c, node.dr, node.dc, node.n))
 
@@ -67,10 +66,5 @@ while q:
         if n > 10:
             continue
 
-        if n < 4 and (ndr, ndc) == (node.dr, node.dc) and (node.dr, node.dc) != (0, 0):
+        if node.n >= 4 or (node.dr, node.dc) == (0,0) or (ndr, ndc) == (node.dr, node.dc):
             heappush(q, block(node.heatloss + int(data[next_r][next_c]), next_r, next_c, ndr, ndc, n))  # fmt: skip
-            continue
-
-        heappush(q, block(node.heatloss + int(data[next_r][next_c]), next_r, next_c, ndr, ndc, n))  # fmt: skip
-else:
-    print("Did not find T")
