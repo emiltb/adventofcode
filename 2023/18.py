@@ -37,7 +37,7 @@ print(P1)
 instructions = [(int("".join(n[:5]), 16),int(n[5:][0])) for n in [[s for s in d if s in '0123456789abcdef'] for _, _, d in data]]
 
 trace = [(0,0)]
-trace_len = 0 #len(instructions) // 2
+trace_len = 0
 for l, d in instructions:
     match d:
         case 0: dr, dc = (0,1)
@@ -56,6 +56,6 @@ internal_area = internal_area // 2
 
 
 # Picks theorem
-# I = A - b // 2 + 1
+# A = I + b // 2 + 1
 P2 = internal_area + trace_len // 2 + 1
 print(P2)
