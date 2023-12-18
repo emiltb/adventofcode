@@ -56,6 +56,10 @@ internal_area = internal_area // 2
 
 
 # Picks theorem
-# A = I + b // 2 + 1
+# A = i + b // 2 - 1
+# We need to find the number of integer points in the figure
+# From Shoelace formula we have A, but we need to find "i + b" (the number of internal and perimeter points)
+# I = A - b // 2 + 1
+# i + b = A + b // 2 + 1
 P2 = internal_area + trace_len // 2 + 1
 print(P2)
