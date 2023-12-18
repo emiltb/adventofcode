@@ -1,6 +1,7 @@
 from collections import deque
 data = [(d, int(l), c) for d, l, c in [l.strip().split() for l in open('data/18.in')]]
 
+# Part 1
 trace = [(0,0)]
 
 for d, l, _ in data:
@@ -31,3 +32,30 @@ while q:
         q.append((nr,nc))
 
 print(P1)
+
+# Part 2
+instructions = [(int("".join(n[:5]), 16),int(n[5:][0])) for n in [[s for s in d if s in '0123456789abcdef'] for _, _, d in data]]
+
+trace = [(0,0)]
+trace_len = 0 #len(instructions) // 2
+for l, d in instructions:
+    match d:
+        case 0: dr, dc = (0,1)
+        case 1: dr, dc = (-1,0)
+        case 2: dr, dc = (0,-1)
+        case 3: dr, dc = (1,0)
+    next_pos = (trace[-1][0] + dr * l, trace[-1][1] + dc * l)
+    trace.append(next_pos)
+    trace_len += l
+
+# Shoelace formula
+internal_area = 0
+for i in range(len(trace) - 1):
+    internal_area += (trace[i][0] * trace[i+1][1] - trace[i+1][0] * trace[i][1] )
+internal_area = internal_area // 2
+
+
+# Picks theorem
+# I = A - b // 2 + 1
+P2 = internal_area + trace_len // 2 + 1
+print(P2)
