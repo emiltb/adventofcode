@@ -48,11 +48,6 @@ while q:
         print(node.heatloss)
         break
 
-    if (node.r, node.c, node.dr, node.dc, node.n) in visited:
-        continue
-
-    visited.add((node.r, node.c, node.dr, node.dc, node.n))
-
     for ndr, ndc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
         next_r, next_c = node.r + ndr, node.c + ndc
         if next_r < 0 or next_r > len(data) - 1 or next_c < 0  or next_c > len(data[0]) - 1:  # fmt: skip
@@ -66,5 +61,9 @@ while q:
         if n > 10:
             continue
 
+        if (next_r, next_c, ndr, ndc, n) in visited:
+                continue
+
         if node.n >= 4 or (node.dr, node.dc) == (0,0) or (ndr, ndc) == (node.dr, node.dc):
             heappush(q, block(node.heatloss + int(data[next_r][next_c]), next_r, next_c, ndr, ndc, n))  # fmt: skip
+            visited.add((next_r, next_c, ndr, ndc, n))
