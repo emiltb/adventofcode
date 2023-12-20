@@ -37,10 +37,7 @@ def get_rule(l):
     return name, evaluate_rule
 
 
-all_rules = dict()
-for r in rules:
-    next_name, next_rule = get_rule(r)
-    all_rules[next_name] = next_rule
+all_rules = {name: rule for name, rule in [get_rule(r) for r in rules]}
 
 P1 = []
 for p in parts:
