@@ -1,7 +1,7 @@
 from heapq import heappop, heappush
 from collections import defaultdict
 
-data = [l.strip() for l in open("data/23.in")]
+data = [l.strip() for l in open("data/23.test.in")]
 
 # Part 1
 S = [(0, c) for c, s in enumerate(data[0]) if s == "."][0]
@@ -81,7 +81,6 @@ for node in intermediate_keys:
     graph[n2].pop(node)
     graph.pop(node)
 
-
 q = [(0, *S, [])]
 visited = [(*S, [])]
 P2 = 0
@@ -98,6 +97,6 @@ while q:
         next_node = (*edge_k, trace + [edge_k])
 
         if next_node not in visited and edge_k not in trace:
-            visited += [next_node]
+            visited.append(next_node)
             heappush(q, (pl - edge_v, *next_node))
 print(P2)
