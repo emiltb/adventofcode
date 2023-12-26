@@ -26,7 +26,7 @@ while q:
         if next_r < 0 or next_r > len(data) - 1 or next_c < 0  or next_c > len(data[0]) - 1:  # fmt: skip
             continue
 
-        if data[next_r][next_c] not in ".>v":
+        if data[next_r][next_c] not in ".>v^<":
             continue
 
         if (data[next_r][next_c] == "v" and (ndr, ndc) != (1, 0)) or (data[next_r][next_c] == ">" and (ndr, ndc) != (0, 1)):  # fmt: skip
@@ -49,14 +49,13 @@ graph = defaultdict(lambda: defaultdict(int))
 while q:
     r, c = heappop(q)
 
-    n_adjacent = 0
     for ndr, ndc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
         next_r, next_c = r + ndr, c + ndc
 
         if next_r < 0 or next_r > len(data) - 1 or next_c < 0  or next_c > len(data[0]) - 1:  # fmt: skip
             continue
 
-        if data[next_r][next_c] not in ".>v":
+        if data[next_r][next_c] not in ".>v^<":
             continue
 
         next_node = (next_r, next_c)
@@ -81,22 +80,21 @@ for node in intermediate_keys:
     graph[n2].pop(node)
     graph.pop(node)
 
-q = [(0, *S, [])]
-visited = [(*S, [])]
+q = [(0, *S, [S])]
 P2 = 0
 while q:
     pl, r, c, trace = heappop(q)
 
-    if (r, c) == T:
-        new_max = max(P2, -pl)
+    if T in graph[(r, c)].keys():
+        new_max = -pl + graph[(r, c)][T]
         if new_max > P2:
             P2 = new_max
             print(P2)
+        continue
 
     for edge_k, edge_v in graph[(r, c)].items():
         next_node = (*edge_k, trace + [edge_k])
 
-        if next_node not in visited and edge_k not in trace:
-            visited.append(next_node)
+        if edge_k not in trace:
             heappush(q, (pl - edge_v, *next_node))
 print(P2)
