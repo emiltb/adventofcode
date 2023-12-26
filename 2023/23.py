@@ -85,7 +85,7 @@ P2 = 0
 while q:
     pl, r, c, trace = heappop(q)
 
-    if T in graph[(r, c)].keys():
+    if T in graph[(r, c)]:
         new_max = -pl + graph[(r, c)][T]
         if new_max > P2:
             P2 = new_max
@@ -93,8 +93,7 @@ while q:
         continue
 
     for edge_k, edge_v in graph[(r, c)].items():
-        next_node = (*edge_k, trace + [edge_k])
-
         if edge_k not in trace:
+            next_node = (*edge_k, trace + [edge_k])
             heappush(q, (pl - edge_v, *next_node))
 print(P2)
