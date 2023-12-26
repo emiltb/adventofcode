@@ -1,7 +1,7 @@
 from heapq import heappop, heappush
 from collections import defaultdict
 
-data = [l.strip() for l in open("data/23.test.in")]
+data = [l.strip() for l in open("data/23.in")]
 
 # Part 1
 S = [(0, c) for c, s in enumerate(data[0]) if s == "."][0]
