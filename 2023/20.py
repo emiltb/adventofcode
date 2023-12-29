@@ -1,10 +1,7 @@
 from collections import deque
-from typing import Any
-
+from functools import reduce
 
 data = [l.strip() for l in open("data/20.in")]
-
-verbose = True
 
 
 class Module:
@@ -15,28 +12,20 @@ class Module:
     def __repr__(self) -> str:
         return f"{type(self).__name__} -> {self.targets}"
 
-
-class Broadcaster(Module):
-    def __call__(self, src, signal: str) -> Any:
+    def __call__(self, src, signal: str) -> None:
         for t in self.targets:
-            if verbose:
-                print(f"{self.name} -{signal}-> {t}")
             signal_queue.append((self.name, t, signal))
-            # modules[t](self.name, signal)
             signals[signal] += 1
 
 
+class Broadcaster(Module):
+    pass
+
+
 class Button(Module):
-    def __call__(self, src=None, signal="low") -> Any:
-        if verbose:
-            print(f"Button -low-> Broadcaster")
-
-        signal_queue.append((self.name, "broadcaster", "low"))
-        # modules["broadcaster"]("low")
-        signals["low"] += 1
+    pass
 
 
-# %
 class FlipFlop(Module):
     def __init__(self, name: str, targets: list[str]) -> None:
         super().__init__(name, targets)
@@ -48,23 +37,14 @@ class FlipFlop(Module):
         elif signal == "low":
             if self.state == "off":
                 self.state = "on"
-                for t in self.targets:
-                    if verbose:
-                        print(f"{self.name} -high-> {t}")
-                    # modules[t](self.name, "high")
-                    signal_queue.append((self.name, t, "high"))
-                    signals["high"] += 1
+                new_signal = "high"
             elif self.state == "on":
                 self.state = "off"
-                for t in self.targets:
-                    if verbose:
-                        print(f"{self.name} -low-> {t}")
-                    # modules[t](self.name, "low")
-                    signal_queue.append((self.name, t, "low"))
-                    signals["low"] += 1
+                new_signal = "low"
+
+            super().__call__(self.name, new_signal)
 
 
-# &
 class Conjunction(Module):
     def __init__(self, name: str, targets: list[str]) -> None:
         super().__init__(name, targets)
@@ -78,21 +58,8 @@ class Conjunction(Module):
 
     def __call__(self, src, signal) -> None:
         self.last_input[src] = signal
-
-        if all(v == "high" for v in self.last_input.values()):
-            for t in self.targets:
-                if verbose:
-                    print(f"{self.name} -low-> {t}")
-                # modules[t](self.name, "low")
-                signal_queue.append((self.name, t, "low"))
-                signals["low"] += 1
-        else:
-            for t in self.targets:
-                if verbose:
-                    print(f"{self.name} -high-> {t}")
-                # modules[t](self.name, "high")
-                signal_queue.append((self.name, t, "high"))
-                signals["high"] += 1
+        new_signal = "low" if all(v == "high" for v in self.last_input.values()) else "high"  # fmt: skip
+        super().__call__(self.name, new_signal)
 
 
 class Output(Module):
@@ -120,15 +87,38 @@ for k, m in dict(modules).items():
 
 modules["button"] = Button("button", ["broadcaster"])
 
-
+verbose = False
 signals = {"low": 0, "high": 0}
-for _ in range(1000):
+i = 1
+state = {s: 0 for s in [m.last_input for k, m in modules.items() if "rx" in m.targets][0].keys()}  # fmt: skip
+while any(v == 0 for v in state.values()):
     signal_queue = deque([(None, "button", "low")])
 
     while signal_queue:
         src, target, signal = signal_queue.popleft()
-        # print(src, target, signal)
         modules[target](src, signal)
+        if target == "rs" and signal == "high":
+            state[src] = i
+    if i == 1000:
+        print(signals["low"] * signals["high"])
+    i += 1
+
+print(reduce(lambda x, y: x * y, [s for s in state.values()]))
 
 
-print(signals["low"] * signals["high"])
+# For showing the modules and connections in graphviz
+# for k, m in modules.items():
+#     for t in m.targets:
+#         print(f"{k} -> {t}")
+
+#     if isinstance(m, Output):
+#         print(f"{k} [shape=star]")
+
+#     if isinstance(m, Conjunction):
+#         print(f"{k} [shape=invtriangle]")
+
+#     if isinstance(m, Button) or isinstance(m, Broadcaster):
+#         print(f"{k} [shape=diamond]")
+
+#     if isinstance(m, FlipFlop):
+#         print(f"{k} [shape=parallelogram]")
