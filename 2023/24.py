@@ -1,6 +1,6 @@
 import re
 from itertools import combinations
-from sympy import Symbol, symbols, solve
+from sympy import Symbol, symbols, solve_poly_system
 
 data = [[int(n) for n in re.findall("-?\d+", l.strip())] for l in open("data/24.in")]
 
@@ -38,5 +38,5 @@ for i, (hx, hy, hz, hvx, hvy, hvz) in enumerate(data[:3]):
     equations.append(z + vz*t - hz - hvz*t)
     variables += (t,)
 
-P2 = solve(equations, variables)[0]
+P2 = solve_poly_system(equations, variables)[0]
 print(sum(P2[:3]))
