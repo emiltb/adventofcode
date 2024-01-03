@@ -9,20 +9,23 @@ size = len(data)
 
 S = [(0, r, c) for r, l in enumerate(data) for c, s in enumerate(l) if s == "S"]
 
-P1 = set()
 P2_params = []
 visited = set()
 q = deque(S)
-n_max = 0
+P1_max = 0
+P2_max = 0
 while q:
-    if q[0][0] % size == size // 2 and q[0][0] > n_max:
-        n_max = q[0][0]
+    nn = q[0][0]
+    if nn > P1_max:
+        if nn == 64:
+            print(len(q))
+        P1_max = nn
+
+    if nn % size == size // 2 and nn > P2_max:
+        P2_max = nn
         P2_params.append(len(q))
 
     n, r, c = q.popleft()
-
-    if n == 64:
-        P1.add((r, c))
 
     for dr, dc in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
         next_r, next_c = r + dr, c + dc
@@ -31,8 +34,6 @@ while q:
             if next_node not in visited and n + 1 <= size * 3:
                 q.append(next_node)
                 visited.add(next_node)
-
-print(len(P1))
 
 # Part 2
 fit = np.array(np.polyfit([0,1,2], P2_params, 2), dtype=np.int64)
