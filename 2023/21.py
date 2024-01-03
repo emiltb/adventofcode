@@ -12,18 +12,12 @@ S = [(0, r, c) for r, l in enumerate(data) for c, s in enumerate(l) if s == "S"]
 P2_params = []
 visited = set()
 q = deque(S)
-P1_max = 0
-P2_max = 0
+n_max = 0
 while q:
-    nn = q[0][0]
-    if nn > P1_max:
-        if nn == 64:
-            print(len(q))
-        P1_max = nn
-
-    if nn % size == size // 2 and nn > P2_max:
-        P2_max = nn
-        P2_params.append(len(q))
+    if (nn := q[0][0]) > n_max:
+        if nn == 64: print(len(q))
+        if nn % size == size // 2: P2_params.append(len(q))
+        n_max = nn
 
     n, r, c = q.popleft()
 
