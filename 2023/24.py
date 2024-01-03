@@ -1,6 +1,6 @@
 import re
 from itertools import combinations
-from sympy import Symbol, solve_poly_system
+from sympy import Symbol, symbols, solve_poly_system
 
 data = [[int(n) for n in re.findall("-?\d+", l.strip())] for l in open("data/24.in")]
 
@@ -22,12 +22,16 @@ for (x1, y1, z1, vx1, vy1, vz1), (x2, y2, z2, vx2, vy2, vz2) in combinations(dat
 print(P1)
 
 # Part 2
-x, y, z = Symbol('x'), Symbol('y'), Symbol('z')
-vx, vy, vz = Symbol('vx'), Symbol('vy'), Symbol('vz')
+x, y, z, vx, vy, vz = variables = symbols('x,y,z,vx,vy,vz')
 
 equations = []
 time_symbols = []
 
+# p + v*t = p[i] + v[i]*t   =>   p + v*t - p[i] - v[i]*t = 0
+# We need to find 6 variables (x, y, z, vx, vy, vz) and 
+# the collission time for each hailstone.
+# This means that the system can be solved using 9 equations, describing
+# the collisions with 3 hailstones.
 for i, (hx, hy, hz, hvx, hvy, hvz) in enumerate(data[:3]):
     t = Symbol(f"t{i}")
 
@@ -36,5 +40,5 @@ for i, (hx, hy, hz, hvx, hvy, hvz) in enumerate(data[:3]):
     equations.append(z + vz*t - hz - hvz*t)
     time_symbols.append(t)
 
-P2 = solve_poly_system(equations, x, y, z, vx, vy, vz, *time_symbols)[0]
+P2 = solve_poly_system(equations, *variables, *time_symbols)[0]
 print(sum(P2[:3]))
