@@ -30,6 +30,6 @@ while q:
                 visited.add(next_node)
 
 # Part 2
-fit = np.array(np.polyfit([0,1,2], P2_params, 2), dtype=np.int64)
+fit = [int(n) for n in np.polyfit([0,1,2], P2_params, 2)]
 grid_size = steps // size
 print(fit[0] * grid_size ** 2 + fit[1] * grid_size + fit[2])
