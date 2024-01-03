@@ -1,5 +1,5 @@
-from collections import deque, defaultdict
-import numpy as np
+from collections import deque
+from numpy import polyfit
 
 data = [l.strip() for l in open("data/21.in")]
 steps = 26501365
@@ -30,6 +30,6 @@ while q:
                 visited.add(next_node)
 
 # Part 2
-fit = [int(n) for n in np.polyfit([0,1,2], P2_params, 2)]
+fit = [int(n) for n in polyfit([0,1,2], P2_params, 2)]
 grid_size = steps // size
 print(fit[0] * grid_size ** 2 + fit[1] * grid_size + fit[2])
