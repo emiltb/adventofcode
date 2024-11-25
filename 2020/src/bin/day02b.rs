@@ -23,7 +23,7 @@ fn main() {
     for p in password_entries {
         let first_pos = p.char_at(p.range.0) == Some(p.letter);
         let second_pos = p.char_at(p.range.1) == Some(p.letter);
-        if first_pos ^ second_pos {
+        if first_pos != second_pos {
             p2 += 1;
         }
     }
