@@ -1,15 +1,10 @@
 data = [[int(s) for s in l.strip().split()] for l in open('data/2.in')]
 
 def is_safe(l):
-    safe = 1
     for a,b in zip(l[0:], l[1:]):
-        if not -3 <= a - b <= 3:
-            safe = 0
-        if ((a - b) > 0) != (l[0] - l[1] > 0):
-            safe = 0
-        if a == b:
-            safe = 0
-    return safe == 1
+        if not -3 <= a - b <= 3 or ((a - b) > 0) != (l[0] - l[1] > 0) or a == b:
+            return False
+    return True
 
 p1 = 0
 for l in data:
