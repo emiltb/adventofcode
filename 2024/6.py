@@ -16,20 +16,16 @@ while 0 < pos[0] < len(data)-1 and 0 < pos[1] < len(data[0])-1:
 print(len(visited))
 
 p2 = 0
-for rb, cb in ((r,c) for r in range(len(data)) for c in range(len(data[0]))):
-    if data[rb][cb] == '#' or (rb,cb) == start:
-        continue
-    this_data = deepcopy(data)
-    this_data[rb] = data[rb][:cb] + '#' + data[rb][cb + 1:]
-
+for rb, cb in visited.copy():
     dirs = deque([(-1,0),(0,1),(1,0),(0,-1)])
     pos = (*start, dirs[0])
     visited = set([pos])
 
     while 0 < pos[0] < len(data)-1 and 0 < pos[1] < len(data[0])-1:
         d = dirs[0]
-        if this_data[pos[0] + d[0]][pos[1] + d[1]] != "#":
-            pos = (pos[0] + d[0], pos[1] + d[1], d)
+        next_r, next_c = pos[0] + d[0], pos[1] + d[1]
+        if data[next_r][next_c] != "#" and (next_r,next_c) != ((rb, cb)):
+            pos = (next_r, next_c, d)
             if pos in visited:
                 p2 += 1
                 break
