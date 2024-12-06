@@ -1,5 +1,4 @@
 from collections import deque
-from copy import deepcopy
 data = [l.strip() for l in open('data/6.in')]
 
 start = pos = [(r, c) for r, l in enumerate(data) for c, s in enumerate(l) if s == '^'][0]
