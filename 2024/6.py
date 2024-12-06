@@ -24,7 +24,7 @@ for rb, cb in visited.copy():
     while 0 < pos[0] < len(data)-1 and 0 < pos[1] < len(data[0])-1:
         d = dirs[0]
         next_r, next_c = pos[0] + d[0], pos[1] + d[1]
-        if data[next_r][next_c] != "#" and (next_r,next_c) != ((rb, cb)):
+        if data[next_r][next_c] != "#" and (next_r,next_c) != (rb, cb):
             pos = (next_r, next_c, d)
             if pos in visited:
                 p2 += 1
