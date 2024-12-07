@@ -5,7 +5,7 @@ data = [[int(n) for n in re.findall(r"\d+", l.strip())] for l in open('data/7.in
 ops = {
     '+': int.__add__,
     '*': int.__mul__,
-    '_': lambda n1, n2: int(str(n1)+str(n2))
+    '|': lambda n1, n2: int(str(n1)+str(n2))
 }
 
 def check_nums(o):
@@ -23,4 +23,4 @@ def check_nums(o):
     print(res)
 
 check_nums('+*')
-check_nums('+*_')
+check_nums('+*|')
