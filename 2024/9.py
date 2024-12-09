@@ -1,3 +1,4 @@
+from tqdm import tqdm
 data = open('data/9.in').read().strip()
 
 mem = []
@@ -9,7 +10,7 @@ for i, s in enumerate(data):
     else:
         mem += [None] * int(s)
 
-for i in range(len(mem)):
+for i in tqdm(range(len(mem))):
     if not None in mem: break
     v = mem.pop()
     if v: mem[mem.index(None)] = v
@@ -21,12 +22,12 @@ t = lambda n: n // 2 if n % 2 == 0 else None
 mem = [(t(i), int(n)) for i, n in enumerate(data)]
 moved = set()
 
-for i in range(len(mem)):
+for i in tqdm(range(len(mem))):
     fid, fsize = mem[-i-1]
-    fidx = mem.index((fid, fsize))
     if fid and fid not in moved:
+        fidx = -i-1 + len(mem)
         moved.add(fid)
-        for pid, psize in ((j,l) for j, (v, l) in enumerate(mem) if v is None and l >= fsize):
+        for pid, psize in ((j,l) for j, (v, l) in enumerate(mem) if v is None):
             if psize >= fsize and fidx > pid:
                 mem[pid] = mem[-i-1]
                 if psize == fsize:
