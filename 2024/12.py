@@ -17,7 +17,7 @@ while q:
     for dr, dc in dirs:
         next_pos = r + dr, c + dc
 
-        if next_pos not in grid.keys() or grid[(r,c)] != grid[next_pos]:
+        if next_pos not in grid or grid[(r,c)] != grid[next_pos]:
             perims[i] += 1
             continue
         if next_pos in visited or next_pos in q:
@@ -25,7 +25,7 @@ while q:
 
         q.append(next_pos)
 
-    if len(q) == 0 and (next_pos := [(r,c) for r, c in grid.keys() if (r,c) not in visited]):
+    if len(q) == 0 and (next_pos := [(r,c) for r, c in grid if (r,c) not in visited]):
         q.append((*next_pos[0],))
         i += 1
 
