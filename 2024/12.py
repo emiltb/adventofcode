@@ -7,39 +7,28 @@ dirs = [(1,0),(0,1),(-1,0),(0,-1)]
 q = deque([(0,0)])
 visited = set([q[0]])
 
-P1 = 0
-perim = 0
-perims = []
-region = []
-regions = []
+regions = defaultdict(list)
+perims = defaultdict(int)
+i = 0
 while q:
     r, c = q.popleft()
-    region.append((r, c))
+    regions[i].append((r, c))
     visited.add((r, c))
 
     for dr, dc in dirs:
-        next_r, next_c = r + dr, c + dc
+        next_pos = r + dr, c + dc
 
-        if (next_r, next_c) not in grid.keys() or grid[(r,c)] != grid[(next_r, next_c)]:
-            perim += 1
+        if next_pos not in grid.keys() or grid[(r,c)] != grid[next_pos]:
+            perims[i] += 1
             continue
 
-        if (next_r, next_c) in visited or (next_r, next_c) in q:
+        if next_pos in visited or next_pos in q:
             continue
 
-        q.append((next_r, next_c))
+        q.append(next_pos)
 
-    if len(q) == 0 and len(visited) != len(grid):
-        perims.append(perim)
-        regions.append(region)
-        perim = 0
-        region = []
-        
-        next_pos = ((r,c) for r, c in grid.keys() if (r,c) not in visited)
-        next_r, next_c = next(next_pos)
-        q.append((next_r, next_c))
-else: 
-    perims.append(perim)
-    regions.append(region)
+    if len(q) == 0 and (next_pos := [(r,c) for r, c in grid.keys() if (r,c) not in visited]):
+        q.append((*next_pos[0],))
+        i += 1
 
-print(sum(len(r)*p for r, p in zip(regions, perims)))
+print(sum(len(r)*p for r, p in zip(regions.values(), perims.values())))
