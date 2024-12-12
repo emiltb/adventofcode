@@ -6,7 +6,6 @@ dirs = [(1,0),(0,1),(-1,0),(0,-1)]
 
 q = deque([(0,0)])
 visited = set([q[0]])
-
 areas = defaultdict(list)
 perims = defaultdict(int)
 i = 0
@@ -21,7 +20,6 @@ while q:
         if next_pos not in grid.keys() or grid[(r,c)] != grid[next_pos]:
             perims[i] += 1
             continue
-
         if next_pos in visited or next_pos in q:
             continue
 
