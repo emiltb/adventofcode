@@ -4,7 +4,7 @@ data = [l.strip() for l in open('data/12.in')]
 grid = {(r,c): s for r, l in enumerate(data) for c, s in enumerate(l)}
 dirs = [(1,0),(0,1),(-1,0),(0,-1)]
 
-q = deque([(0,0)])
+q = deque([list(grid)[0]])
 visited = set([q[0]])
 areas = defaultdict(list)
 perims = defaultdict(int)
