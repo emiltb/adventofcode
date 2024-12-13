@@ -30,27 +30,63 @@ while q:
         i += 1
 
 print(sum(len(a)*len(p) for a, p in zip(areas.values(), perims.values())))
-# print(perims[i])
-# print(areas[i])
-# print(set(areas[i]))
 
-def print_region(d, p):
-    r_min, r_max = min([r for r, _ in d]), max([r for r, _ in d])
-    c_min, c_max = min([c for _, c in d]), max([c for _, c in d])
-    print(r_min, r_max, c_min, c_max)
-    for r in range(r_min - 1, r_max + 2):
-        for c in range(c_min - 1, c_max + 2):
-            char = '.'
-            if (r,c) in d: char = "#"
-            if (r,c) in p: char = "X"
-            print(char, end="")
-        print()
 
-i = 239
-print(len(areas[i]),len(set(areas[i])))
-print(len(perims[i]),len(set(perims[i])))
-print_region(areas[i], perims[i])
-# for i in range(len(areas)):
-#     print(f"i: {i}")
-#     print_region(areas[i], perims[i])
-#     print()
+def calculate_price(area):
+    r_min, r_max = min([r for r, _ in area]), max([r for r, _ in area])
+    c_min, c_max = min([c for _, c in area]), max([c for _, c in area])
+    sides = []
+    side_upper = []
+    side_lower = []
+    for r in range(r_min, r_max + 1):
+        for c in range(c_min, c_max + 1):
+            if (r - 1, c) not in area and (r,c) in area:
+                side_upper.append((r,c, 'up'))
+            else:
+                if side_upper:
+                    sides.append(side_upper)
+                    side_upper = []
+
+            if (r + 1, c) not in area and (r,c) in area:
+                side_lower.append((r,c, 'lo'))
+            else:
+                if side_lower:
+                    sides.append(side_lower)
+                    side_lower = []
+
+        if side_upper:
+            sides.append(side_upper)
+            side_upper = []
+        if side_lower:
+            sides.append(side_lower)
+            side_lower = []
+
+    side_left = []
+    side_right = []
+    for c in range(c_min, c_max + 1):
+        for r in range(r_min, r_max + 1):
+            if (r, c - 1) not in area and (r,c) in area:
+                side_left.append((r,c, 'le'))
+            else:
+                if side_left:
+                    sides.append(side_left)
+                    side_left = []
+
+            if (r, c + 1) not in area and (r,c) in area:
+                side_right.append((r,c, 'ri'))
+            else:
+                if side_right:
+                    sides.append(side_right)
+                    side_right = []
+        if side_left:
+                    sides.append(side_left)
+                    side_left = []
+        if side_right:
+                sides.append(side_right)
+                side_right = []     
+
+    return len(area) * len(sides)
+
+
+print(sum(calculate_price(a) for a in areas.values()))
+print(areas[0])
