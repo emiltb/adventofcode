@@ -69,3 +69,24 @@ def calculate_price(area):
 
 
 print(sum(calculate_price(a) for a in areas.values()))
+
+
+def count_corners(area):
+    corners = set()
+    for r, c in area:
+        for nr, nc in [(r - 0.5, c - 0.5),(r - 0.5, c + 0.5), (r + 0.5, c + 0.5), (r + 0.5, c - 0.5)]:
+            corners.add((nr, nc))
+    
+    n_corners = 0
+    for r, c in corners:
+        neighbours = [(nr, nc) in area for nr, nc in [(r - 0.5, c - 0.5),(r - 0.5, c + 0.5), (r + 0.5, c + 0.5), (r + 0.5, c - 0.5)]]
+
+        if sum(neighbours) == 3: n_corners += 1
+        if sum(neighbours) == 1: n_corners += 1
+        if sum(neighbours) == 2:
+            if neighbours == [True, False, True, False] or neighbours == [False, True, False, True]:
+                n_corners += 2
+
+    return len(area)*n_corners
+
+print(sum(count_corners(a) for a in areas.values()))
