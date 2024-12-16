@@ -25,11 +25,9 @@ while q:
         if grid[(next_r, next_c)] == '#' or (next_r, next_c) in trace or (next_r, next_c, dr, dc) in visited:
             continue
 
-        next_points = points
-        if (pdr, pdc) != (dr, dc): 
-            next_points += 1000
+        dir_changed = (pdr, pdc) != (dr, dc)
 
-        next_node = (next_points + 1, next_r, next_c, dr, dc, trace | set([(next_r, next_c)]))
+        next_node = (points + 1 + 1000 * dir_changed, next_r, next_c, dr, dc, trace | set([(next_r, next_c)]))
         heappush(q, next_node)
 
 print(min_points)
