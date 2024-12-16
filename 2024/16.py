@@ -15,7 +15,7 @@ while q:
     points, r, c, pdr, pdc, trace = heappop(q)
     visited.add((r, c, pdr, pdc) )
     if (r,c) == end:
-        if points == min_points or min_points == 1e9:
+        if points <= min_points:
             best_paths |= set(trace)
             min_points = min(min_points, points)
 
