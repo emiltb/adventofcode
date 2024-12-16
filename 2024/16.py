@@ -11,12 +11,13 @@ q = [(0, *start, *dir, set([start]))]
 visited = set()
 min_points = 1e9
 best_paths = set()
+
 while q:
     points, r, c, pdr, pdc, trace = heappop(q)
     visited.add((r, c, pdr, pdc) )
     if (r,c) == end:
         if points <= min_points:
-            best_paths |= set(trace)
+            best_paths |= trace
             min_points = min(min_points, points)
 
     for dr, dc in [(dr, dc) for dr, dc in dirs if (dr != -pdr and dc != -pdc) or (dr, dc) == (pdr, pdc)]:
