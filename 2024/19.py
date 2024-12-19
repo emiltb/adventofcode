@@ -6,11 +6,10 @@ def f(string, i, cache):
     if (string, i) in cache: 
         return cache[(string, i)]
     
-    ans = 0
-
     if len(string[i:]) == 0: 
         return 1
     
+    ans = 0
     for r in [len(t) for t in towels if string[i:].startswith(t)]: 
         ans += f(string, i + r, cache)
 
