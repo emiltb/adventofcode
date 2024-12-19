@@ -16,5 +16,6 @@ def f(string, i, cache):
     cache[(string, i)] = ans
     return ans
 
-print(sum(f(d, 0, {}) > 0 for d in designs))
-print(sum(f(d, 0, {}) for d in designs))
+solution = [f(d, 0, {}) for d in designs] 
+print(sum(s > 0 for s in solution))
+print(sum(s for s in solution))
