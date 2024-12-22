@@ -32,7 +32,7 @@ for s, d in zip(secret_numbers, diffs):
         if i + 4 < len(s) and s[i + 4] >= 5:
             sequence_candidates.append(tuple(d[i:i+4]))
 
-sequence_candidates = [k for k, _ in Counter(sequence_candidates).most_common(1)]
+sequence_candidates = [k for k, _ in Counter(sequence_candidates).most_common(5)]
 
 P2 = {seq: 0 for seq in sequence_candidates}
 for test_seq in sequence_candidates:
