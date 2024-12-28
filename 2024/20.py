@@ -31,9 +31,9 @@ for r, c in inner_grid:
 print(sum(v for k, v in Counter(P1).items() if k >= 100))
 
 cheats = {}
+possible_dirs = {(dr,dc) for dr in range(-20,21) for dc in range(-20,21) if abs(dr) + abs(dc) <= 20}
 for pos in visited:
     r, c = pos
-    possible_dirs = {(dr,dc) for dr in range(-20,21) for dc in range(-20,21) if abs(dr) + abs(dc) <= 20}
 
     for dr, dc in possible_dirs:
         nr, nc = r + dr, c + dc
