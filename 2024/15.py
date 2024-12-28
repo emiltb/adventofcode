@@ -44,7 +44,6 @@ instructions = deque("".join(instructions.split()))
 def can_move(block, dr, dc, res):
     if all(grid[(r+dr, c+dc)] == '.' for r, c in block):
         res += block
-        return True
     
     for r, c in block:
         if grid[(r+dr, c + dc)] == ']':
@@ -53,7 +52,7 @@ def can_move(block, dr, dc, res):
             block_position = [(r + dr, c), (r + dr, c + 1)]
         elif grid[(r+dr, c + dc)] == '#':
             res += [False]
-            continue
+            break
         else:
             continue
     
@@ -63,30 +62,28 @@ def can_move(block, dr, dc, res):
     if not all(res):
         return False
     
-    return sorted(list(set(res))) if dr < 0 else sorted(list(set(res)), reverse=(dr > 0))
+    return set(res)
 
-def push_big(r, c, dr, dc):
+def push_horizontal(r, c, dr, dc):
     next_pos = (r + dr, c + dc)
-    if dr == 0:
-        if grid[next_pos] in '[]':
-            push_big(*next_pos, dr, dc)
-        if grid[next_pos] == '.':
-            grid[next_pos] = grid[(r,c)]
-            grid[(r,c)] = '.'
-    if dr != 0:
-        if grid[(r,c)] == '[':
-            block_position = [(r,c), (r, c + 1)]
-        elif grid[(r,c)] == ']':
-            block_position = [(r,c - 1), (r, c)]
+    if grid[next_pos] in '[]':
+        push_horizontal(*next_pos, dr, dc)
+    if grid[next_pos] == '.':
+        grid[next_pos] = grid[(r,c)]
+        grid[(r,c)] = '.'
 
-        if blocks := can_move(block_position, dr, dc, []):
-            if blocks == True:
-                blocks = block_position
-            for br, bc in blocks:
-                next_pos = (br + dr, bc + dc)
-                grid[next_pos] = grid[(br, bc)]
-                grid[(br, bc)] = '.'
-                
+def push_vertical(r, c, dr, dc):
+    next_pos = (r + dr, c + dc)
+    if grid[(r,c)] == '[':
+        block_position = [(r,c), (r, c + 1)]
+    elif grid[(r,c)] == ']':
+        block_position = [(r,c - 1), (r, c)]
+
+    if blocks := can_move(block_position, dr, dc, []):
+        for br, bc in sorted(blocks, reverse = dr > 0):
+            next_pos = (br + dr, bc + dc)
+            grid[next_pos] = grid[(br, bc)]
+            grid[(br, bc)] = '.'
 
 pos = [(r,c) for (r,c), s in grid.items() if s == "@"][0]
 while instructions:
@@ -96,7 +93,10 @@ while instructions:
     next_pos = (r + dr, c + dc)
 
     if grid[next_pos] in '[]':
-        push_big(*next_pos, dr, dc)
+        if dr == 0:
+            push_horizontal(*next_pos, dr, dc) 
+        else:
+            push_vertical(*next_pos, dr, dc)
 
     if grid[next_pos] == '.':
         grid[next_pos] = '@'
