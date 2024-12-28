@@ -1,4 +1,4 @@
-from collections import Counter, defaultdict, deque
+from collections import Counter, defaultdict
 data = [l.strip() for l in open('data/20.in')]
 grid = {(r,c) for r, l in enumerate(data) for c, s in enumerate(l) if s == '#'}
 start = [(r,c) for r, l in enumerate(data) for c, s in enumerate(l) if s == 'S'][0]
@@ -30,7 +30,7 @@ for r, c in inner_grid:
 
 print(sum(v for k, v in Counter(P1).items() if k >= 100))
 
-cheats = defaultdict(lambda: 1e6)
+cheats = {}
 for pos in visited:
     r, c = pos
     possible_dirs = {(dr,dc) for dr in range(-20,21) for dc in range(-20,21) if abs(dr) + abs(dc) <= 20}
@@ -39,6 +39,6 @@ for pos in visited:
         nr, nc = r + dr, c + dc
 
         if (nr, nc) in visited and visited[(nr, nc)] > visited[pos]:
-            cheats[(pos, (nr, nc))] = min(visited[(nr, nc)] - visited[pos] - (abs(dr) + abs(dc)), cheats[(pos, (nr, nc))] )
+            cheats[(pos, (nr, nc))] = visited[(nr, nc)] - visited[pos] - (abs(dr) + abs(dc))
 
 print(sum(v for k, v in Counter(cheats.values()).items() if k >= 100))
