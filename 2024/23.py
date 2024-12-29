@@ -1,12 +1,16 @@
 from collections import defaultdict
-data = [l.strip().split('-') for l in open('data/23.test.in')]
+import networkx as nx
+
+data = [l.strip().split("-") for l in open("data/23.in")]
 
 connections = defaultdict(set)
+graph = nx.Graph()
 for n1, n2 in data:
     connections[n1].add(n2)
     connections[n2].add(n1)
+    graph.add_edge(n1, n2)
 
-nodes_with_t = {k for k in connections.keys() if str(k).startswith('t')}
+nodes_with_t = {k for k in connections.keys() if str(k).startswith("t")}
 
 P1 = set()
 for n1 in connections.keys():
@@ -18,15 +22,4 @@ for n1 in connections.keys():
 
 print(len(P1))
 
-#P2 = set()
-#for k, v in connections.items():
-#    S = set([k, *v])
-#    print(k, v, S)
-#    for k1 in v:
-#        # print("\t", k1, connections[k1])
-#        print(set([k1, *connections[k1]]))
-#        S &= set([k1, *connections[k1]])
-#    print(S)
-
-for k in connections:
-    print(k, connections[k])
+print(",".join(sorted(max(nx.find_cliques(graph), key=len))))
