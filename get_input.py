@@ -3,17 +3,18 @@ import os
 import requests
 import argparse
 
-AOC_COOKIE = {"session": os.getenv("AOCCOOKIE")}
+AOC_COOKIE = {"session": os.getenv("AOC_COOKIE")}
+
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--year", type=int, default=2023)
+parser.add_argument("--year", type=int, default=2025)
 parser.add_argument("--day", type=int, default=1)
 parser.add_argument("--force", action=argparse.BooleanOptionalAction)
 args = parser.parse_args()
 
 
 input_path = f"{args.year}/data/{args.day}.in"
-script_path = f"{args.year}/{args.day}.py"
+script_path = f"{args.year}/{args.day:>02}.py"
 if os.path.exists(input_path) and not args.force:
     print(f"Input for {args.year} day {args.day} already downloaded")
     exit(1)
