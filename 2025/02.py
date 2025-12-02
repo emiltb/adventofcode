@@ -1,8 +1,5 @@
 import re
-data = [l.strip().split(',') for l in open('data/2.in')][0]
-id_list = [[int(n) for n in s.split('-')] for s in data]
+data = [[int(n) for n in s.split('-')] for s in [l.strip().split(',') for l in open('data/2.in')][0]]
 
-P1 = sum(n for n1, n2 in id_list for n in range(n1, n2 + 1) if re.match(r'^(\d+)\1$', str(n)))
-P2 = sum(n for n1, n2 in id_list for n in range(n1, n2 + 1) if re.match(r'^(\d+)\1+$', str(n)))
-
-print(P1, P2)
+for pattern in (r'^(\d+)\1$', r'^(\d+)\1+$'):
+    print(sum(n for n1, n2 in data for n in range(n1, n2 + 1) if re.match(pattern, str(n))))
