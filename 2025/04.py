@@ -1,6 +1,6 @@
 data = [l.strip() for l in open('data/4.in')]
 grid = {(r, c) for r in range(len(data)) for c in range(len(data[0])) if data[r][c] == '@'}
-dirs = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+dirs = {(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)}
 
 P1 = 0
 for r, c in grid:
