@@ -1,36 +1,23 @@
 data = [l.strip() for l in open('data/4.in')]
-
 grid = {(r, c) for r in range(len(data)) for c in range(len(data[0])) if data[r][c] == '@'}
-
 dirs = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
 
 P1 = 0
 for r, c in grid:
-    count_adjacent = 0
-    for dr, dc in dirs:
-        if (r + dr, c + dc) in grid:
-            count_adjacent += 1
-    if count_adjacent < 4:
+    if sum(1 for dr, dc in dirs if (r + dr, c + dc) in grid) < 4: 
         P1 += 1
 
 print(P1)
 
-
-removed = set()
-
+P2 = set()
 while True:
     for r, c in grid:
-        count_adjacent = 0
-        for dr, dc in dirs:
-            if (r + dr, c + dc) in grid:
-                count_adjacent += 1
-        if count_adjacent < 4:
-            removed.add((r,c))
+        if sum(1 for dr, dc in dirs if (r + dr, c + dc) in grid) < 4:
+            P2.add((r,c))
     
-    if not grid & removed:
+    if not grid & P2:
         break
     
-    grid = grid - removed
+    grid = grid - P2
 
-
-print(len(removed))
+print(len(P2))
