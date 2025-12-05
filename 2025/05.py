@@ -3,18 +3,8 @@ data = [l.strip() for l in open('data/5.in')]
 fresh, ingredients = data[:data.index('')], data[data.index('')+1:]
 fresh_intervals = [[int(n1), int(n2)] for n1, n2 in [s.split('-') for s in fresh]]
 
-
-P1 = 0
-for item in ingredients:
-    spoiled = 1
-    for n1, n2 in fresh_intervals:
-        if n1 <= int(item) <= n2:
-            spoiled = 0
-    
-    if spoiled == 0:
-        P1 += 1
-
-print(P1)
+P1 = set(item for item in ingredients for n1, n2 in fresh_intervals if n1 <= int(item) <= n2)
+print(len(P1))
 
 
 def merge_ranges(intervals):
