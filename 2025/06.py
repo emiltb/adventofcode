@@ -18,8 +18,8 @@ data = [l.replace('\n', '') for l in raw_data][:-1]
 
 data_transposed = ['' for _ in range(len(data[0]))]
 for r in data:
-    for n in range(len(data[0]), 0, -1):
-        data_transposed[n-1] += r[n-1]
+    for n in range(len(data[0])):
+        data_transposed[n] += r[n]
 
 numbers = [[]]
 for d in data_transposed:
