@@ -27,5 +27,6 @@ for d in data_transposed:
         numbers[-1].append(int(v))
     else:
         numbers.append([])
+
 P2 = sum(reduce(o, n) for o, n in zip(operators, numbers))
 print(P2)
