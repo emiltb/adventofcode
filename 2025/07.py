@@ -1,3 +1,4 @@
+from collections import defaultdict
 data = [l.strip() for l in open('data/7.in')]
 
 S = [(i, j) for i, r in enumerate(data) for j, c in enumerate(r) if data[i][j] == 'S'][0]
@@ -43,3 +44,18 @@ def p2(pos, cache):
     return ans
 
 print(p2(S, {}))
+
+
+# Other, more direct approach to part 2
+pos = defaultdict(lambda: 0)
+for r in data:
+    if 'S' in r:
+        pos[r.index('S')] = 1
+        continue
+    
+    for i, c in enumerate(r):
+        if c == '^':
+            pos[i-1] += pos[i]
+            pos[i+1] += pos[i]
+            pos[i] = 0
+print(sum(pos.values()))
