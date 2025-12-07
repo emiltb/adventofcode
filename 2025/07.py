@@ -1,6 +1,6 @@
 data = [l.strip() for l in open('data/7.in')]
 
-S = {(i, j) for i, r in enumerate(data) for j, c in enumerate(r) if data[i][j] == 'S'}
+S = [(i, j) for i, r in enumerate(data) for j, c in enumerate(r) if data[i][j] == 'S'][0]
 splitters = {(i,  j) for i, r in enumerate(data) for j, c in enumerate(r) if data[i][j] == '^'}
 
 r_max = len(data)
@@ -21,7 +21,7 @@ def p1(pos, splits = set()):
     return p1(new_pos, splits)
 
 
-print(p1(S))
+print(p1(set((S,))))
 
 def p2(pos, cache):
     if pos in cache:
@@ -42,4 +42,4 @@ def p2(pos, cache):
     
     return ans
 
-print(p2([s for s in S][0], {}))
+print(p2(S, {}))
