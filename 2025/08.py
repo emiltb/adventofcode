@@ -31,7 +31,7 @@ def combine_elements(circuits):
     return circuit_list
 
 prev_length = 0
-for _ in range(10):
+while True:
     circuits = combine_elements(circuits)
 
     lengths = sorted([len(c) for c in circuits], reverse=True)
