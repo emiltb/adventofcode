@@ -19,19 +19,17 @@ while q:
 print(len(P1))
 
 
+def find(in_node, out_node, cache):
+    if (in_node, out_node) in cache:
+        return cache[(in_node, out_node)]
+    if in_node == out_node:
+        return 1
+    
+    res = sum(find(new_in_node, out_node, cache) for new_in_node in graph.get(in_node, []))
+    cache[(in_node, out_node)] = res
+    return res
 
-S = 'svr'
-q = deque([(S, 0, [S])])
+P2 = (find('svr', 'dac', {}) * find('dac', 'fft', {}) * find('fft', 'out', {}) +
+      find('svr', 'fft', {}) * find('fft', 'dac', {}) * find('dac', 'out', {}))
 
-P2 = []
-while q:
-    node, steps, path = q.popleft()
-
-    for next_node in graph[node]:
-        if next_node == 'out':
-            print(path)
-            P2.append(path)
-            continue
-        q.append((next_node, steps + 1, path + [next_node]))
-
-print(len([p for p in P2 if 'fft' in p and 'dac' in p]))
+print(P2)
