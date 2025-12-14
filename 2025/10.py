@@ -1,5 +1,7 @@
 from heapq import heappop, heappush
-data = [l.strip().split() for l in open('data/10.test.in')]
+import pulp
+
+data = [l.strip().split() for l in open('data/10.in')]
 
 P1 = 0
 for d in data:
@@ -8,10 +10,9 @@ for d in data:
     buttons = [{eval(l)} for l in buttons]
 
     q = [(0, 0b0, b) for b in buttons]
-    
+
     while q:
         presses, state, button = heappop(q)
-     
 
         for b in button:
             if isinstance(b, int):
@@ -19,7 +20,7 @@ for d in data:
             else:
                 for n in b:
                     state ^= 1 << n
-        
+
         if state == lights:
             P1 += presses + 1
             break
@@ -30,48 +31,39 @@ for d in data:
 
 print(P1)
 
-# P2 = 0
-# for d in data:
-#     _, *buttons, joltage = d
-#     buttons = [{eval(l)} for l in buttons]
-#     joltage = eval(joltage.replace('{','[').replace('}',']'))
+P2 = 0
+for d in data:
+    _, *buttons, joltage = d
 
-#     state = [0] * len(joltage)
+    buttons = [[eval(l)] for l in buttons]
+    joltage = eval(joltage.replace('{','[').replace('}',']'))
 
-#     q = [(0, state, b) for b in buttons]
+    num_vars = len(buttons)
+    variables = [pulp.LpVariable(f'x{i}', cat='Integer') for i in range(num_vars)]
 
-#     print(state)
+    prob = pulp.LpProblem("Integer_System", pulp.LpMinimize)
+    prob += sum(variables)
+    for var in variables:
+        prob += var >= 0
 
-#     while True:
-#         print(buttons)
-#     # while q:
-#     #     presses, state, button = heappop(q)
-#     #     state = list(state)
-#     #     print(presses, state, button)
-     
+    lhs = []
+    for row, indices in enumerate(buttons):
+        if isinstance(indices[0], tuple):
+            indices = [n for t in indices for n in t]
 
-#     #     for b in button:
-#     #         if isinstance(b, int):
-#     #             b = [b]
-#     #         for n in b:
-#     #             state[n] += 1
-#     #             print(f'Pressed {n}. State {state}.')
-        
-#     #     if state == joltage:
-#     #         P2 += presses + 1
-#     #         print(P2)
-#     #         break
+        col = []
+        for n in range(len(joltage)):
+            if n in indices:
+                col.append(1)
+            else:
+                col.append(0)
+        lhs.append(col)
 
-#     #     # for s, j in zip(state, joltage):
-#     #     #     if s > j:
-#     #     #         break
+    for l, r in zip(zip(*lhs), joltage):
+        total = sum(variables[i] for i, v in enumerate(l) if v)
+        prob += (total == r)
 
-#     #     # if presses > 11:
-#     #     #     break
+    status = prob.solve(pulp.PULP_CBC_CMD(msg=False))
+    P2 += int(sum(v.varValue for v in variables))
 
-#     #     # for b in buttons:
-#     #     #     next_node = (presses + 1, state, b)
-#     #     #     # print("Next node: ", next_node)
-#     #     #     heappush(q, next_node)
-
-#     break
+print(P2)
